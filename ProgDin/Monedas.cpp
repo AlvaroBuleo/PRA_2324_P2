@@ -1,14 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
+#include <algorithm>
 #define N 3
-
-
-int min(int x, int y){
-	if(x < y)
-		return x;
-	else 
-		return y;
-}
 
 int cambio(int* v,int P,int* vector){
 	int tab[N][P+1];
@@ -23,15 +16,14 @@ int cambio(int* v,int P,int* vector){
         	if(j >= v[0] && tab[0][j - v[0]] != -1){	//De
 			tab[0][j] = 1 + tab[0][j - v[0]];	//La
 		}						//Tabla
-	}
-	
+	}	
 	for(int i = 1;i < N;i++){							//Resto
 		tab[i][0] = 0;								//De
 		for(int j = 1;j <= P;j++){						//Filas
 			if(j < v[i] || tab[i][j - v[i]] == -1)
 				tab[i][j] = tab[i - 1][j];
 			else if(tab[i - 1][j] != -1)
-				tab[i][j] = min(tab[i - 1][j],1 + tab[i][j - v[i]]);
+				tab[i][j] = std::min(tab[i - 1][j],(1 + tab[i][j - v[i]]));
 			else
 				tab[i][j] = 1 + tab[i][j - v[i]];
 		}
